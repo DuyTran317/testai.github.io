@@ -45,10 +45,11 @@
         window.requestAnimationFrame(loop);
     }
 
-    // run the webcam image through the image model
+     // run the webcam image through the image model
     async function predict() {
         // predict can take in an image, video or canvas html element
-        const prediction = await model.predict(webcam.canvas);
+        const prediction = await model.predictTopK(webcam.canvas);
+	const label = prediction[0].className;
 	if(label !== lastLabel)
 	{
 		lastLabel = label;
