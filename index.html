@@ -13,6 +13,7 @@
     const URL = "https://teachablemachine.withgoogle.com/models/xCHw-UwOP/";
 
     let model, webcam, labelContainer, maxPredictions;
+    let lastLabel = '';
 
     // Load the image model and setup the webcam
     async function init() {
@@ -48,6 +49,12 @@
     async function predict() {
         // predict can take in an image, video or canvas html element
         const prediction = await model.predictTopK(webcam.canvas);
+	const label = prediction[0].className;
+	if(label !== lastLabel)
+	{
+		lastLabel = label;
+		responsiveVoice.speak(label, "Vietnamese Female");
 		labelContainer.innerText = prediction[0].className;
+	}
     }
 </script>
